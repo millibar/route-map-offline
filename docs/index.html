@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, viewport-fit=cover">
+    <link rel="manifest" href="https://millibar.github.io/route-map-offline/manifest.json">
+    <!-- iOS用 manifestの代替-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="路線図オフライン">
+    <link rel="apple-touch-icon" href="./img/icon-152x152.png">
+    <meta name="description" content="名古屋市営地下鉄の時刻表データから電車の位置を計算して表示します。">
+    <meta name="theme-color" content="#cee7ff">
+    <title>名古屋市営地下鉄路線図</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript" src="./function.js"></script>
+    <script type="text/javascript" src="./UI.js"></script>
+    <script type="text/javascript" src="./東山線.js"></script>
+    <script type="text/javascript" src="./鶴舞線.js"></script>
+    <script type="text/javascript" src="./桜通線.js"></script>
+    <script type="text/javascript" src="./名城線.js"></script>
+    <script type="text/javascript" src="./名港線.js"></script>
+    <script type="text/javascript" src="./上飯田線.js"></script>
+</head>
+<body>
+<nav id="day">
+    <input type="radio" name="day" id="weekday" value="weekday"><label for="weekday">平日</label>
+    <input type="radio" name="day" id="holiday" value="holiday"><label for="holiday">休日</label>
+</nav>
+
+<ul id="routemap">
+    <!--乗換駅-->
+    <li class="station 東山線 桜通線" id="名古屋"><span>名古屋</span></li>
+    <li class="station 桜通線 鶴舞線" id="丸の内"><span>丸の内</span></li>
+    <li class="station 桜通線 鶴舞線" id="御器所"><span>御器所</span></li>
+    <li class="station 東山線 桜通線" id="今池"><span>今池</span></li>
+    <li class="station 東山線 鶴舞線" id="伏見"><span>伏見</span></li>
+    <li class="station 名城線 鶴舞線" id="上前津"><span>上前津</span></li>
+    <li class="station 東山線 名城線" id="栄"><span>栄</span></li>
+    <li class="station 桜通線 名城線" id="久屋大通"><span>久屋大通</span></li>
+    <li class="station 名城線 上飯田線" id="平安通"><span>平安通</span></li>
+    <li class="station 東山線 名城線" id="本山"><span>本山</span></li>
+    <li class="station 名城線 鶴舞線" id="八事"><span>八事</span></li>
+    <li class="station 桜通線 名城線" id="新瑞橋"><span>新瑞橋</span></li>
+
+    <!-- 東山線 -->
+    <li class="station 東山線" id="高畑"><span>高畑</span></li>
+    <li class="station 東山線" id="八田"><span>八田</span></li>
+    <li class="station 東山線" id="岩塚"><span>岩塚</span></li>
+    <li class="station 東山線" id="中村公園"><span>中村公園</span></li>
+    <li class="station 東山線" id="中村日赤"><span>中村日赤</span></li>
+    <li class="station 東山線" id="本陣"><span>本陣</span></li>
+    <li class="station 東山線" id="亀島"><span>亀島</span></li>
+        <!-- 名古屋 -->
+        <!-- 伏見 -->
+        <!-- 栄 -->
+    <li class="station 東山線" id="新栄町"><span>新栄町</span></li>
+    <li class="station 東山線" id="千種"><span>千種</span></li>
+        <!-- 今池 -->
+    <li class="station 東山線" id="池下"><span>池下</span></li>
+    <li class="station 東山線" id="覚王山"><span>覚王山</span></li>
+        <!-- 本山 -->
+    <li class="station 東山線" id="東山公園"><span>東山公園</span></li>
+    <li class="station 東山線" id="星ヶ丘"><span>星ヶ丘</span></li>
+    <li class="station 東山線" id="一社"><span>一社</span></li>
+    <li class="station 東山線" id="上社"><span>上社</span></li>
+    <li class="station 東山線" id="本郷"><span>本郷</span></li>
+    <li class="station 東山線" id="藤が丘"><span>藤が丘</span></li>
+
+
+    <!-- 名城線 -->
+    <li class="station 名城線" id="金山"><span>金山</span></li>
+    <li class="station 名城線" id="東別院"><span>東別院</span></li>
+        <!-- 上前津 -->
+    <li class="station 名城線" id="矢場町"><span>矢場町</span></li>
+        <!-- 栄 -->
+        <!-- 久屋大通 -->
+    <li class="station 名城線" id="市役所"><span>市役所</span></li>
+    <li class="station 名城線" id="名城公園"><span>名城公園</span></li>
+    <li class="station 名城線" id="黒川"><span>黒川</span></li>
+    <li class="station 名城線" id="志賀本通"><span>志賀本通</span></li>
+        <!-- 平安通 -->
+    <li class="station 名城線" id="大曽根"><span>大曽根</span></li>
+    <li class="station 名城線" id="ナゴヤドーム前矢田"><span>ナゴヤドーム前矢田</span></li>
+    <li class="station 名城線" id="砂田橋"><span>砂田橋</span></li>
+    <li class="station 名城線" id="茶屋ヶ坂"><span>茶屋ヶ坂</span></li>
+    <li class="station 名城線" id="自由ヶ丘"><span>自由ヶ丘</span></li>
+        <!-- 本山 -->
+    <li class="station 名城線" id="名古屋大学"><span>名古屋大学</span></li>
+    <li class="station 名城線" id="八事日赤"><span>八事日赤</span></li>
+        <!-- 八事 -->
+    <li class="station 名城線" id="総合リハビリセンター"><span>総合リハビリセンター</span></li>
+    <li class="station 名城線" id="瑞穂運動場東"><span>瑞穂運動場東</span></li>
+        <!-- 新瑞橋 -->
+    <li class="station 名城線" id="妙音通"><span>妙音通</span></li>
+    <li class="station 名城線" id="堀田"><span>堀田</span></li>
+    <li class="station 名城線" id="伝馬町"><span>伝馬町</span></li>
+    <li class="station 名城線" id="神宮西"><span>神宮西</span></li>
+    <li class="station 名城線" id="西高蔵"><span>西高蔵</span></li>
+
+    <!-- 桜通線 -->
+    <li class="station 桜通線" id="中村区役所"><span>中村区役所</span></li>
+        <!-- 名古屋 -->
+    <li class="station 桜通線" id="国際センター"><span>国際センター</span></li>
+        <!-- 丸の内 -->
+        <!-- 久屋大通 -->
+    <li class="station 桜通線" id="高岳"><span>高岳</span></li>
+    <li class="station 桜通線" id="車道"><span>車道</span></li>
+        <!-- 今池 -->
+    <li class="station 桜通線" id="吹上"><span>吹上</span></li>
+        <!-- 御器所 -->
+    <li class="station 桜通線" id="桜山"><span>桜山</span></li>
+    <li class="station 桜通線" id="瑞穂区役所"><span>瑞穂区役所</span></li>
+    <li class="station 桜通線" id="瑞穂運動場西"><span>瑞穂運動場西</span></li>
+        <!-- 新瑞橋 -->
+    <li class="station 桜通線" id="桜本町"><span>桜本町</span></li>
+    <li class="station 桜通線" id="鶴里"><span>鶴里</span></li>
+    <li class="station 桜通線" id="野並"><span>野並</span></li>
+    <li class="station 桜通線" id="鳴子北"><span>鳴子北</span></li>
+    <li class="station 桜通線" id="相生山"><span>相生山</span></li>
+    <li class="station 桜通線" id="神沢"><span>神沢</span></li>        
+    <li class="station 桜通線" id="徳重"><span>徳重</span></li>
+
+    <!-- 鶴舞線 -->
+    <li class="station 鶴舞線" id="上小田井"><span>上小田井</span></li>
+    <li class="station 鶴舞線" id="庄内緑地公園"><span>庄内緑地公園</span></li>
+    <li class="station 鶴舞線" id="庄内通"><span>庄内通</span></li>
+    <li class="station 鶴舞線" id="浄心"><span>浄心</span></li>
+    <li class="station 鶴舞線" id="浅間町"><span>浅間町</span></li>
+        <!-- 丸の内 -->
+        <!-- 伏見 -->
+    <li class="station 鶴舞線" id="大須観音"><span>大須観音</span></li>
+        <!-- 上前津 -->
+    <li class="station 鶴舞線" id="鶴舞"><span>鶴舞</span></li>
+    <li class="station 鶴舞線" id="荒畑"><span>荒畑</span></li>
+        <!-- 御器所 -->
+    <li class="station 鶴舞線" id="川名"><span>川名</span></li>
+    <li class="station 鶴舞線" id="いりなか"><span>いりなか</span></li>
+        <!-- 八事 -->
+    <li class="station 鶴舞線" id="塩釜口"><span>塩釜口</span></li>
+    <li class="station 鶴舞線" id="植田"><span>植田</span></li>
+    <li class="station 鶴舞線" id="原"><span>原</span></li>
+    <li class="station 鶴舞線" id="平針"><span>平針</span></li>
+    <li class="station 鶴舞線" id="赤池"><span>赤池</span></li>
+
+    <!-- 名港線 -->
+    <li class="station 名港線" id="日比野"><span>日比野</span></li>
+    <li class="station 名港線" id="六番町"><span>六番町</span></li>
+    <li class="station 名港線" id="東海通"><span>東海通</span></li>
+    <li class="station 名港線" id="港区役所"><span>港区役所</span></li>
+    <li class="station 名港線" id="築地口"><span>築地口</span></li>
+    <li class="station 名港線" id="名古屋港"><span>名古屋港</span></li>
+
+    <!-- 上飯田線 -->
+    <li class="station 上飯田線" id="上飯田"><span>上飯田</span></li>
+</ul>
+
+
+<script type="text/javascript" src="./station.js"></script>
+<script type="text/javascript" src="./train.js"></script>
+
+
+<button id="butInstall" aria-label="Install" hidden></button>
+
+<!-- PWAのインストール用 -->
+<script src="./install.js"></script>
+
+<!-- service workerを登録する -->
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js')
+          .then((reg) => {
+            console.log('Service worker registered.', reg);
+          });
+    });
+  }
+</script>
+    
+</body>
+</html>
