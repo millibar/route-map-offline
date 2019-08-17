@@ -738,3 +738,10 @@ body {
 #赤池 span {
     top: 20px;
 }
+
+#butInstall {
+    border: none;
+    background: inherit;
+    box-shadow: none;
+    transition: none;
+}
