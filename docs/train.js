@@ -38,7 +38,7 @@ class Train {
 
         const UItimetable = new UIpositioning (nav, 'right', 'bottom')
         
-        while (handler.UIs.length > 1) {
+        while (handler.UIs.length > 2) {
             handler.popUI()
         }
         handler.addUI(UItimetable)
