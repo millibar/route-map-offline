@@ -129,6 +129,8 @@ class ScaleHandler {
         const innerWidth = window.innerWidth
         const innerHieght = window.innerHeight
         this.ratio = Math.max(innerWidth/(1000 + 50), innerHieght/(777 + 50))
+        this.dX = 0
+        this.dY = 0
         this.update()
         console.log(`拡大率: ${this.ratio}`)
     }
