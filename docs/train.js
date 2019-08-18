@@ -146,14 +146,14 @@ daySwitch.addEventListener('click', () => {
     daySwitch.style.opacity = 1;
     setTimeout(function (){
         daySwitch.style.opacity = 0.7;
-    }, 2000)
+    }, 3000)
 }, false)
 
 reloadBtn.addEventListener('click', () => {
-    reloadBtn.style.opacity = 1;
+    reloadBtn.classList.add('rotate')
     setTimeout(function (){
-        reloadBtn.style.opacity = 0.7;
-    }, 2000)
+        reloadBtn.classList.remove('rotate')
+    }, 1000)
 }, false)
 
 

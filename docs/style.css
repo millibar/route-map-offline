@@ -13,6 +13,10 @@ body {
     background: #efefef;
 }
 
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* UI部品用
 ピンチインアウトされても位置と大きさを固定する。
 大きさの基準はfont-sizeとして、font-sizeをJavaScriptから動的に変える。
@@ -125,6 +129,12 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
 #reload img {
     width: 100%;
 
+}
+
+#reload.rotate {
+    transform: rotate(360deg);
+    transition: 0.8s;
+    opacity: 1;
 }
 
 .fade-out {
