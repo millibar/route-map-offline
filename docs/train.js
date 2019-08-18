@@ -32,11 +32,11 @@ class Train {
         closeTimeTable ()
 
         const dl = createTimeTable (this.route)
-        const body = document.querySelector('body')
-        body.appendChild(dl)
+        const nav = document.getElementById('timetable')
+        nav.appendChild(dl)
         this.li.classList.add('active')
 
-        const UItimetable = new UIpositioning (dl, 'right', 'bottom')
+        const UItimetable = new UIpositioning (nav, 'right', 'bottom')
         
         while (handler.UIs.length > 1) {
             handler.popUI()
@@ -61,8 +61,6 @@ class Train {
 
         if (t < prevTime_s) {
             
-            this.reqId = window.requestAnimationFrame(this.update.bind(this))
-            /*
             console.log('発車前')
             let sleepTime_s = prevTime_s - t
             
@@ -74,7 +72,6 @@ class Train {
             } else {
                 this.remove()
             }
-            */
             
             return
         }

@@ -388,8 +388,7 @@ const removeClassName = (className) => {
 const createTimeTable = (array) => {
 
     const dl = document.createElement('dl')
-    dl.className = 'timetable'
-
+    
     let t1 = toSecFromNow()
 
     let count = 0
@@ -428,10 +427,10 @@ const createTimeTable = (array) => {
 }
 
 const closeTimeTable = () => {
-    const dl = document.querySelector('.timetable')
+    const nav = document.getElementById('timetable')
+    const dl = nav.getElementsByTagName('dl')[0]
     if (dl) {
-        const parent = dl.parentElement
-        parent.removeChild(dl)
+        nav.removeChild(dl)
         removeClassName ('active')
         window.removeEventListener('click', closeTimeTable)
     }

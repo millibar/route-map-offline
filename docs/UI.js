@@ -10,16 +10,10 @@ class ScaleHandler {
         this.startY = 0
         this.dX = 0
         this.dY = 0
-
+        this.ratio = 1
         this.UIs = [] // 地図の拡大縮小・移動に伴い、位置の再設定が必要となるUI部品を保持する
 
-        const innerWidth = window.innerWidth
-        const innerHieght = window.innerHeight
-        this.ratio = Math.max(innerWidth/(1000 + 50), innerHieght/(777 + 50))
-
-        console.log(`拡大率: ${this.ratio}`)
-
-        this.update()
+        this.initScale()
 
         window.addEventListener('mousedown', this.onMouseDown.bind(this), false)
         window.addEventListener('mouseup', this.onMouseUp.bind(this), false)
@@ -120,6 +114,14 @@ class ScaleHandler {
         this.scroll()
     }
 
+    initScale () {
+        const innerWidth = window.innerWidth
+        const innerHieght = window.innerHeight
+        this.ratio = Math.max(innerWidth/(1000 + 50), innerHieght/(777 + 50))
+        this.update()
+        console.log(`拡大率: ${this.ratio}`)
+    }
+
     scroll () {
         const maxX = Math.max((this.area.clientWidth * this.ratio - window.innerWidth)/2, 30)
         const minX = - maxX
@@ -199,7 +201,6 @@ class UIpositioning {
     }
 
     fadeIn () {
-        
         setTimeout(() => {
             this.resize()
             this.reposition()
@@ -225,9 +226,6 @@ class UIpositioning {
     }
 
     reposition () {
-        //const offsetX = Math.max(window.pageXOffset, 0) + this.xOffset
-        //const offsetY = Math.max(window.pageYOffset, 0) + this.yOffset
-
         if (this.x === 'left') {
             let offsetX = Math.max(window.pageXOffset, 0) + this.xOffset
             this.element.style.left = `${offsetX}px`
@@ -235,6 +233,7 @@ class UIpositioning {
         } else if (this.x === 'right') {
             let offsetX = Math.abs(window.innerWidth - document.body.clientWidth) - Math.max(window.pageXOffset, 0) + this.xOffset
             this.element.style.right = `${offsetX}px`
+
         } else {
             console.log(`キーワードが想定外：${this.x}`)
         }
@@ -246,10 +245,10 @@ class UIpositioning {
         } else if (this.y === 'bottom') {
             let offsetY = Math.abs(window.innerHeight - document.body.clientHeight) - Math.max(window.pageYOffset, 0) + this.yOffset
             this.element.style.bottom = `${offsetY}px`
+
         } else {
             console.log(`キーワードが想定外：${this.y}`)
         }
-
     }
 
     hide () {
