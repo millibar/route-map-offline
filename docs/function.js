@@ -419,8 +419,8 @@ const createTimeTable = (array) => {
 
    dl.addEventListener('click', closeTimeTable, false)
 
-   setTimeout(() => {
-       window.addEventListener('click', closeTimeTable, false)
+   setTimeout(() => { 
+       document.getElementById('routemap').addEventListener('click', closeTimeTable, false)
     }, 100)
 
     return dl
@@ -432,6 +432,6 @@ const closeTimeTable = () => {
     if (dl) {
         nav.removeChild(dl)
         removeClassName ('active')
-        window.removeEventListener('click', closeTimeTable)
+        document.getElementById('routemap').removeEventListener('click', closeTimeTable)
     }
 }

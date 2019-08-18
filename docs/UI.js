@@ -52,8 +52,19 @@ class ScaleHandler {
     onTouchStart (event) {
         event.preventDefault()
         const touches = event.changedTouches
-        this.startX = touches[0].pageX
-        this.startY = touches[0].pageY
+        if (touches.length < 2) {
+            this.startX = touches[0].pageX
+            this.startY = touches[0].pageY
+
+        } else {
+            /* 指1と指2の距離を求める */
+            let x1 = touches[0].pageX
+            let y1 = touches[0].pageY
+            let x2 = touches[1].pageX
+            let y2 = touches[1].pageY
+            this.baseDistanse = Math.hypot(x2 - x1, y2 - y1)
+        }
+        
     }
 
     onMouseDown (event) {
