@@ -132,15 +132,28 @@ setDayToRadioBtn()
 
 const routemap = document.getElementById('routemap')
 const handler = new ScaleHandler (routemap)
+
 const daySwitch = document.getElementById('day')
+const reloadBtn = document.getElementById('reload')
+
 const UIdaySwitch = new UIpositioning (daySwitch, 'left', 'top')
+const UIreloadBtn = new UIpositioning (reloadBtn, 'right', 'top')
+
 handler.addUI(UIdaySwitch)
+handler.addUI(UIreloadBtn)
 
 daySwitch.addEventListener('click', () => {
     daySwitch.style.opacity = 1;
     setTimeout(function (){
         daySwitch.style.opacity = 0.7;
-    }, 3000)
+    }, 2000)
+}, false)
+
+reloadBtn.addEventListener('click', () => {
+    reloadBtn.style.opacity = 1;
+    setTimeout(function (){
+        reloadBtn.style.opacity = 0.7;
+    }, 2000)
 }, false)
 
 
@@ -281,7 +294,7 @@ const start = () => {
 
 const restart = () => {
 
-    removeElementsByClassName ('timetable')
+    closeTimeTable ()
     removeElements (routemap, 'train')
 
     for (let i = 0, len = trains_all.length; i < len; i++) {
@@ -300,7 +313,12 @@ for (let i = 0, len = radios.length; i < len; i++) {
 }
 
 
+reloadBtn.addEventListener('click', () => {
+    setDayToRadioBtn()
+    handler.initScale()
+    restart()
 
+}, false)
 
 
 /*

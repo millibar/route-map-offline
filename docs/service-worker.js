@@ -18,7 +18,7 @@
 'use strict';
 
 // CODELAB: Update cache names any time any of the cached files change.
-const CACHE_NAME = 'static-cache-20190818_1155';
+const CACHE_NAME = 'static-cache-20190818_1255';
 
 
 
@@ -44,6 +44,7 @@ const FILES_TO_CACHE = [
     './img/arrow_dc6e8b.png',
     './img/arrow_edaa36.png',
     './img/arrow_ffffff.png',
+    './img/reload.png'
 ];
 
 self.addEventListener('install', (evt) => {

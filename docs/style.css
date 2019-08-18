@@ -13,23 +13,33 @@ body {
     background: #efefef;
 }
 
-#day {/* ピンチインアウトされても位置と大きさを固定する。
-    大きさの基準はfont-sizeとして、font-sizeをJavaScriptから動的に変える。
-    そのため、余白やボーダーはem単位とする。
-    transform: scale()で大きさの調整をしないのは
-    top, leftの値もスケーリングされるので位置の調整が難しくなるから。 */
+/* UI部品用
+ピンチインアウトされても位置と大きさを固定する。
+大きさの基準はfont-sizeとして、font-sizeをJavaScriptから動的に変える。
+そのため、余白やボーダーはem単位とする。
+transform: scale()で大きさの調整をしないのは
+top, left, right, bottomの値もスケーリングされるので位置の調整が難しくなるから。 */
+#day, #timetable, #reload {
     position: absolute;
     z-index: 200;
+    font-size: 2.5vh;
+    margin: 0;
+    padding: 0;
+    opacity: 0.7;
+}
+
+#day {
     top: 20px;
     left: 20px;
-    font-size: 2.5vh;
     background: #fff;
-    padding: 0;
     border: 0.15em solid #fff;
     box-shadow: 0.1em 0.1em 0.25em #bbb;
     border-radius: 0.7em;
     display: flex;
-    opacity: 0.7;
+}
+
+#day:hover {
+    opacity: 1;
 }
 
 #day input {
@@ -59,13 +69,8 @@ body {
 }
 
 #timetable {
-    position: absolute;
     bottom: 20px;
     right: 20px;
-    font-size: 2.5vh;
-    margin: 0;
-    opacity: 0.7;
-    z-index: 1000;
 }
 
 #timetable dl {
@@ -105,6 +110,22 @@ body {
     visibility: hidden;
 }
 
+#reload {
+    top: 20px;
+    right: 20px;
+    width: 2em;
+    height: 2em;
+}
+
+#reload:hover {
+    opacity: 1;
+}
+
+#reload img {
+    width: 100%;
+
+}
+
 .fade-out {
     /*transition: 0.2s; Safariでtransition + opacity + transform:scale()するとぼやけるらしい */
     opacity: 0!important;
@@ -119,6 +140,7 @@ body {
     display: none!important;
 }
 
+/* ↑ UI部品用ここまで ↑ */
 
 #routemap {
     margin: auto;
