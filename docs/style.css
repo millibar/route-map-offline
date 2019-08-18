@@ -113,8 +113,8 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
 #reload {
     top: 20px;
     right: 20px;
-    width: 2em;
-    height: 2em;
+    width: 1.5em;
+    height: 1.5em;
 }
 
 #reload:hover {
