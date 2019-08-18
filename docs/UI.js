@@ -6,12 +6,15 @@ class ScaleHandler {
         this.area = element
         this.baseDistanse = 0 // Zoomの基準となる指の距離
         this.isMouseDown = false // マウスドラッグ中か判定するフラグ
+        this.isZooming = false // ズームと移動を区別するためのフラグ
         this.startX = 0
         this.startY = 0
         this.dX = 0
         this.dY = 0
         this.ratio = 1
         this.UIs = [] // 地図の拡大縮小・移動に伴い、位置の再設定が必要となるUI部品を保持する
+
+        this.timeoutId = null
 
         this.initScale()
 
@@ -63,6 +66,7 @@ class ScaleHandler {
             let x2 = touches[1].pageX
             let y2 = touches[1].pageY
             this.baseDistanse = Math.hypot(x2 - x1, y2 - y1)
+            this.isZooming = true
         }
         
     }
@@ -76,7 +80,7 @@ class ScaleHandler {
 
     onTouchEnd (event) {
         this.baseDistanse = 0 // Zoom開始時の指の距離をリセット
-
+        this.isZooming = false
         this.UIfadeIn()
     }
 
@@ -94,7 +98,7 @@ class ScaleHandler {
         
         const touches = event.changedTouches
 
-        if (touches.length > 1) {
+        if (touches.length > 1 || this.isZooming) {
             return
         }
 
@@ -161,6 +165,8 @@ class ScaleHandler {
             return
         }
 
+        this.isZooming = true
+
         /* 指1と指2の距離を求める */
         let x1 = touches[0].pageX
         let y1 = touches[0].pageY
@@ -168,10 +174,12 @@ class ScaleHandler {
         let y2 = touches[1].pageY
         let distance = Math.hypot(x2 - x1, y2 - y1)
 
+        clearTimeout (this.timeoutId)
+
         if (this.baseDistanse > 0) {
             let scale = this.ratio * distance / this.baseDistanse 
 
-            if (scale < 1) {scale = 1}
+            if (scale < 0.9) {scale = 0.9}
             if (scale > 3) {scale = 3}
 
             if (scale > 2.5) {
@@ -183,6 +191,10 @@ class ScaleHandler {
             this.ratio = scale
 
             this.update()
+
+            this.timeoutId = setTimeout( () => {
+                this.baseDistanse = 0
+            },100)
 
         } else {
             this.baseDistanse = distance
