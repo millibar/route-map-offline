@@ -17,6 +17,7 @@ class Train {
 
     start () {
         // 地図上に電車を追加する
+        this.position = 0
         this.li = document.createElement('li')
         this.li.classList.add('train', 'hidden', this.rosen)
         this.ul.appendChild(this.li)

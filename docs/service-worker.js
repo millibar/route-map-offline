@@ -18,7 +18,7 @@
 'use strict';
 
 // CODELAB: Update cache names any time any of the cached files change.
-const CACHE_NAME = 'static-cache-20190819_2130';
+const CACHE_NAME = 'static-cache-20190820_0622';
 
 
 
