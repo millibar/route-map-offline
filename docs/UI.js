@@ -65,7 +65,7 @@ class ScaleHandler {
             let y1 = touches[0].pageY
             let x2 = touches[1].pageX
             let y2 = touches[1].pageY
-            this.baseDistanse = Math.hypot(x2 - x1, y2 - y1)
+            this.baseDistanse = Math.hypot(x2 - x1, y2 - y1)/this.ratio
             this.isZooming = true
         }
         
@@ -175,7 +175,7 @@ class ScaleHandler {
         let y1 = touches[0].pageY
         let x2 = touches[1].pageX
         let y2 = touches[1].pageY
-        let distance = Math.hypot(x2 - x1, y2 - y1)
+        let distance = Math.hypot(x2 - x1, y2 - y1)/this.ratio
 
         //clearTimeout (this.timeoutId)
 
@@ -185,11 +185,12 @@ class ScaleHandler {
             if (scale < 0.9) {scale = 0.9}
             if (scale > 3) {scale = 3}
 
+            /*
             if (scale > 2.5) {
                 this.UIhide()
             } else {
                 this.UIshow()
-            }
+            }*/
 
             this.ratio = scale
 
@@ -248,11 +249,12 @@ class UIpositioning {
             return
         }
 
+        /*
         if (ratio > 2.5) {
             this.hide()
         } else {
             this.show()
-        }
+        }*/
     }
 
     reposition () {
