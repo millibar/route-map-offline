@@ -84,23 +84,23 @@ class Train {
 
         let dX = nextSta.getX() - prevSta.getX()
         let dY = nextSta.getY() - prevSta.getY()
-        let dT = nextTime_s - waitTime_s - prevTime_s
+        let dT = nextTime_s - (prevTime_s + waitTime_s)
         let Vx = dX/dT
         let Vy = dY/dT
 
         this.angle = getRotateAngle(dX, dY)
 
-        if (prevTime_s <= t && t <= nextTime_s - waitTime_s) {
-            let elapsed_s = t - prevTime_s
+        if (prevTime_s <= t && t < prevTime_s + waitTime_s) {
+            this.x = prevSta.getX()
+            this.y = prevSta.getY()
+            this.li.classList.add('wait')
+            this.go()
+
+        } else if (prevTime_s + waitTime_s <= t && t < nextTime_s) {
+            let elapsed_s = t - (prevTime_s + waitTime_s)
             this.x = prevSta.getX() + Math.round(Vx * elapsed_s)
             this.y = prevSta.getY() + Math.round(Vy * elapsed_s)
             this.li.classList.remove('wait')
-            this.go()
-
-        } else if (nextTime_s - waitTime_s < t && t < nextTime_s) {
-            this.x = nextSta.getX()
-            this.y = nextSta.getY()
-            this.li.classList.add('wait')
             this.go()
 
         } else if (nextTime_s <= t) {

@@ -102,7 +102,7 @@ class ScaleHandler {
             return
         }
 
-        const speed = 0.1
+        const speed = 0.7
 
         let dx = (touches[0].pageX - this.startX)
         let dy = (touches[0].pageY - this.startY)
@@ -110,6 +110,9 @@ class ScaleHandler {
         this.dY += dy * speed
 
         this.scroll()
+
+        this.startX = touches[0].pageX
+        this.startY = touches[0].pageY
     }
 
     onMouseMove (event) {
