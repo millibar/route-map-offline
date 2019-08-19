@@ -80,8 +80,12 @@ class ScaleHandler {
 
     onTouchEnd (event) {
         this.baseDistanse = 0 // Zoom開始時の指の距離をリセット
-        this.isZooming = false
-        this.UIfadeIn()
+
+        setTimeout(() => { 
+            this.isZooming = false
+            this.UIfadeIn()
+         }, 100)
+        
     }
 
     onMouseUp (event) {
@@ -177,30 +181,14 @@ class ScaleHandler {
         let y2 = touches[1].pageY
         let distance = Math.hypot(x2 - x1, y2 - y1)/this.ratio
 
-        //clearTimeout (this.timeoutId)
-
         if (this.baseDistanse > 0) {
             let scale = this.ratio * distance / this.baseDistanse 
 
             if (scale < 0.9) {scale = 0.9}
             if (scale > 3) {scale = 3}
 
-            /*
-            if (scale > 2.5) {
-                this.UIhide()
-            } else {
-                this.UIshow()
-            }*/
-
             this.ratio = scale
-
             this.update()
-
-            /*
-            this.timeoutId = setTimeout( () => {
-                this.baseDistanse = 0
-            },100)
-            */
 
         } else {
             this.baseDistanse = distance
@@ -245,16 +233,6 @@ class UIpositioning {
 
         this.element.style.fontSize = `${2.5/ratio}vh`
 
-        if (ratio === 1) {
-            return
-        }
-
-        /*
-        if (ratio > 2.5) {
-            this.hide()
-        } else {
-            this.show()
-        }*/
     }
 
     reposition () {

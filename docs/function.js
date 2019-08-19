@@ -416,10 +416,10 @@ const createTimeTable = (array) => {
 
         count += 1
     }
-
-   dl.addEventListener('click', closeTimeTable, false)
-
-   setTimeout(() => { 
+    
+    dl.addEventListener('click', closeTimeTable, false)
+    
+    setTimeout(() => { 
        document.getElementById('routemap').addEventListener('click', closeTimeTable, false)
     }, 100)
 
