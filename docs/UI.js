@@ -14,8 +14,6 @@ class ScaleHandler {
         this.ratio = 1
         this.UIs = [] // 地図の拡大縮小・移動に伴い、位置の再設定が必要となるUI部品を保持する
 
-        //this.timeoutId = null
-
         this.initScale()
 
         window.addEventListener('mousedown', this.onMouseDown.bind(this), false)
@@ -106,12 +104,10 @@ class ScaleHandler {
             return
         }
 
-        const speed = 0.7
-
-        let dx = (touches[0].pageX - this.startX)
-        let dy = (touches[0].pageY - this.startY)
-        this.dX += dx * speed
-        this.dY += dy * speed
+        let dx = (touches[0].pageX - this.startX)/this.ratio
+        let dy = (touches[0].pageY - this.startY)/this.ratio
+        this.dX += dx
+        this.dY += dy
 
         this.scroll()
 
