@@ -14,7 +14,7 @@ class ScaleHandler {
         this.ratio = 1
         this.UIs = [] // 地図の拡大縮小・移動に伴い、位置の再設定が必要となるUI部品を保持する
 
-        this.timeoutId = null
+        //this.timeoutId = null
 
         this.initScale()
 
@@ -177,7 +177,7 @@ class ScaleHandler {
         let y2 = touches[1].pageY
         let distance = Math.hypot(x2 - x1, y2 - y1)
 
-        clearTimeout (this.timeoutId)
+        //clearTimeout (this.timeoutId)
 
         if (this.baseDistanse > 0) {
             let scale = this.ratio * distance / this.baseDistanse 
@@ -195,9 +195,11 @@ class ScaleHandler {
 
             this.update()
 
+            /*
             this.timeoutId = setTimeout( () => {
                 this.baseDistanse = 0
             },100)
+            */
 
         } else {
             this.baseDistanse = distance
