@@ -77,7 +77,7 @@ class Train {
             return
         }
 
-        const waitTime_s = 30
+        const waitTime_s = 20
                 
         let next = this.route[this.position + 1]
         let nextSta = next.sta
