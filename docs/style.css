@@ -183,7 +183,7 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
     bottom: 20px;
     left: 20px;
     width: 2.2em;
-    height: 2.2em;    
+    height: 2.2em;
 }
 
 #locator img {
@@ -230,42 +230,48 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
         width:0;
         height:0;
         background-size: 0 0;
-        transform: translate(0px, 0px);
+        margin: 0 0 0 0;
+        /*transform: translate(0px, 0px);*/
     }
 
     50% {
         width: 26px;
         height: 26px;
         background-size: 26px 26px;
-        transform: translate(-13px, -13px);
+        margin: -13px 0 0 -13px;
+        /*transform: translate(-13px, -13px);*/
     }
 
     60% {
         width: 10px;
         height: 36px;
         background-size: 10px 36px;
-        transform: translate(-5px, -26px);
+        margin: -26px 0 0 -5px;
+        /*transform: translate(-5px, -26px);*/
     }
 
     70% {
         width: 26px;
         height: 10px;
         background-size: 26px 10px;
-        transform: translate(-13px, -5px);
+        margin: -5px 0 0 -13px;
+        /*transform: translate(-13px, -5px);*/
     }
 
     85% {
         width: 10px;
         height: 36px;
         background-size: 10px 36px;
-        transform: translate(-5px, -26px);
+        margin: -26px 0 0 -5px;
+        /*transform: translate(-5px, -26px);*/
     }
 
     100% {
         width: 26px;
         height: 26px;
         background-size: 26px 26px;
-        transform: translate(-13px, -13px);
+        margin: -13px 0 0 -13px;
+        /*transform: translate(-13px, -13px);*/
     }
 }
 
@@ -278,8 +284,9 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
     background-size: 26px 26px;
     position: absolute;
     z-index: 200;
-    transform: translate(-13px, -13px);
-    /*animation: up 0.7s ease 0s 1 normal none;*/
+    margin: -13px 0 0 -13px;
+    /*transform: translate(-13px, -13px);*/
+    animation: up 0.7s ease 0s 1 normal none;
 }
 
 .station {
@@ -402,7 +409,7 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
 
     width: 24px;
     height: 24px;
-    
+
     transform-origin: 0 0;
 }
 
