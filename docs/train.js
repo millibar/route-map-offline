@@ -286,6 +286,8 @@ const trains_休日 = [
 
 const trains_all = [].concat(trains_平日).concat(trains_東山線_平日).concat(trains_東山線_金曜).concat(trains_休日)
 
+
+
 const start = () => {
     const day = getVirtualDay ()
 
@@ -315,8 +317,8 @@ const start = () => {
 const restart = () => {
 
     closeTimeTable ()
-    removeElements (routemap, 'train')
-    removeLocationMarker ()
+    removeElementsByClassName ('train')
+    removeElementsByClassName ('location-marker')
 
     for (let i = 0, len = trains_all.length; i < len; i++) {
         pauseTrains(trains_all[i])
@@ -348,7 +350,7 @@ const geoOptions = {
 }
 
 locatorBtn.addEventListener('click', () => {
-    removeLocationMarker ()
+    removeElementsByClassName ('location-marker')
     navigator.geolocation.getCurrentPosition(createLocationMarker, handlePositionError, geoOptions);
 
 }, false)

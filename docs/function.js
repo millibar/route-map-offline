@@ -117,7 +117,6 @@ const getRotateAngle = (dX, dY) => {
         return 180
     }
 
-
     let rad = Math.atan(Math.abs(dY/dX))
     let deg = rad * 180/Math.PI
 
@@ -223,20 +222,11 @@ const pauseTrains = (trains) => {
 }
 
 /**
- * 第一引数で与えた要素の子要素のうち、第二引数で与えたクラス名を持つ要素を削除する。
- * @param {HTMLelment} element 要素
- * @param {string} className 削除する要素のクラス名
+ * 引数で与えたクラス名を持つ要素をすべて削除する。
+ * @param {string} className 
  */
-const removeElements = (element, className) => {
-    let targets = element.querySelectorAll(`.${className}`)
-    for (let i = 0, len = targets.length; i < len; i++) {
-        element.removeChild(targets[i])
-    }
-}
-
 const removeElementsByClassName = (className) => {
-    const body = document.querySelector('body')
-    let targets = body.querySelectorAll(`.${className}`)
+    let targets = document.querySelectorAll(`.${className}`)
     for (let i = 0, len = targets.length; i < len; i++) {
         let target = targets[i]
         let parent = target.parentElement
@@ -310,7 +300,6 @@ const getDayOfWeekStr = () => {
     let dayOfWeekStr = ['休','平','平','平','平','金','休']
 
     return dayOfWeekStr[dayOfWeek]
-
 }
 
 /**
@@ -330,7 +319,6 @@ const setDayToRadioBtn = () => {
         weekdayRadio.checked = true
         holidayRadio.checked = false
     }
-
 }
 
 /**
@@ -365,7 +353,6 @@ const getVirtualDay = () => {
                 return '平'
             }
     }
-
 }
 
 /**
@@ -462,14 +449,6 @@ const createLocationMarker = (position) => {
     li.style.top = `${y}px`
 
     ul.appendChild(li)
-}
-
-const removeLocationMarker = () => {
-    const ul = document.getElementById('routemap')
-    const li = ul.getElementsByClassName('location-marker')[0]
-    if (li) {
-        ul.removeChild(li)
-    }
 }
 
 /**
