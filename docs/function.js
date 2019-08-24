@@ -399,10 +399,12 @@ const createTimeTable = (array) => {
             break
         }
 
-        let timeStr = array[i].time
-        let t2= toSecFromTimeStr(timeStr)
+        const lagTime_s = 20
 
-        if (t1 > t2) { // 過ぎた駅は表示しない
+        let timeStr = array[i].time
+        let t2= toSecFromTimeStr(timeStr) - lagTime_s
+
+        if (t1 - t2 > 60) { // 過ぎた駅は表示しない
             continue
         }
 
@@ -434,4 +436,57 @@ const closeTimeTable = () => {
         removeClassName ('active')
         document.getElementById('routemap').removeEventListener('click', closeTimeTable)
     }
+}
+
+/**
+ * 位置情報を受け取り、地図上にマーカーを表示する
+ * @param {Position} position 
+ */
+const createLocationMarker = (position) => {
+    const crd = position.coords
+
+    let latitude = crd.latitude
+    let longitude = crd.longitude
+
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    console.log(`More or less ${crd.accuracy} meters.`);
+
+    let y = Math.round((35.223557 - latitude) * scaleFactor) // scaleFactorはstation.jsで定義されたグローバル変数
+    let x = Math.round((longitude - 136.853421) * scaleFactor)
+
+    const ul = document.getElementById('routemap')
+    const li = document.createElement('li')
+    li.classList.add('location-marker')
+    li.style.left = `${x}px`
+    li.style.top = `${y}px`
+
+    ul.appendChild(li)
+}
+
+const removeLocationMarker = () => {
+    const ul = document.getElementById('routemap')
+    const li = ul.getElementsByClassName('location-marker')[0]
+    if (li) {
+        ul.removeChild(li)
+    }
+}
+
+/**
+ * PositionErrorオブジェクトを受け取り、エラーメッセージを表示する
+ * @param {PositionError} err 
+ */
+const handlePositionError = (err) => {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+    const msg = '位置情報を取得できませんでした'
+    const p = document.createElement('p')
+    p.textContent = msg
+    p.classList.add('msg')
+
+    const body = document.getElementsByTagName('body')[0]
+    body.appendChild(p)
+    
+    setTimeout(() => { 
+        body.removeChild(p)
+     }, 3000)
 }

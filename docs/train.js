@@ -32,14 +32,15 @@ class Train {
     showRoute () {
         closeTimeTable ()
 
-        const dl = createTimeTable (this.route)
         const nav = document.getElementById('timetable')
+        const dl = createTimeTable (this.route)
+        dl.classList.add(`${this.rosen}`)
         nav.appendChild(dl)
         this.li.classList.add('active')
 
         const UItimetable = new UIpositioning (nav, 'right', 'bottom')
         
-        while (handler.UIs.length > 2) {
+        while (handler.UIs.length > 3) { // #day, #reload, #locatorがすでに入っている
             handler.popUI()
         }
         handler.addUI(UItimetable)
@@ -54,11 +55,30 @@ class Train {
             return
         }
 
-        let t = toSecFromNow()
+        const lagTime_s = 20 // 時刻表の時刻よりだいたい20秒くらい遅れてに駅に着く
+
+        let t = toSecFromNow() - lagTime_s
 
         let prev = this.route[this.position]
         let prevSta = prev.sta
         let prevTime_s = toSecFromTimeStr(prev.time)
+
+        let next = this.route[this.position + 1]
+        let nextSta = next.sta
+        let nextTime_s = toSecFromTimeStr(next.time)
+
+        // 駅間が2分未満（＝1分）のときは、駅間が1分半になるように到着時刻を30秒延ばす。
+        if (nextTime_s - prevTime_s < 120) {
+            nextTime_s += 30
+        }
+
+        if (this.position - 1 > 0) {
+            let prePrevTime_s = toSecFromTimeStr(this.route[this.position - 1].time)
+            if (prevTime_s - prePrevTime_s < 120) {
+                prevTime_s += 30
+            }
+        }
+
 
         if (t < prevTime_s) {
             
@@ -77,12 +97,8 @@ class Train {
             return
         }
 
-        const waitTime_s = 20
-                
-        let next = this.route[this.position + 1]
-        let nextSta = next.sta
-        let nextTime_s = toSecFromTimeStr(next.time)
-
+        const waitTime_s = 20 // 停車時間
+        
         let dX = nextSta.getX() - prevSta.getX()
         let dY = nextSta.getY() - prevSta.getY()
         let dT = nextTime_s - (prevTime_s + waitTime_s)
@@ -136,12 +152,15 @@ const handler = new ScaleHandler (routemap)
 
 const daySwitch = document.getElementById('day')
 const reloadBtn = document.getElementById('reload')
+const locatorBtn = document.getElementById('locator')
 
 const UIdaySwitch = new UIpositioning (daySwitch, 'left', 'top')
 const UIreloadBtn = new UIpositioning (reloadBtn, 'right', 'top')
+const UIlocatorBtn = new UIpositioning (locatorBtn, 'left', 'bottom')
 
 handler.addUI(UIdaySwitch)
 handler.addUI(UIreloadBtn)
+handler.addUI(UIlocatorBtn)
 
 daySwitch.addEventListener('click', () => {
     daySwitch.style.opacity = 1;
@@ -320,6 +339,20 @@ reloadBtn.addEventListener('click', () => {
     restart()
 
 }, false)
+
+const geoOptions = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+}
+
+locatorBtn.addEventListener('click', () => {
+    removeLocationMarker ()
+    navigator.geolocation.getCurrentPosition(createLocationMarker, handlePositionError, geoOptions);
+
+}, false)
+
+
 
 
 /*

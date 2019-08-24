@@ -4,13 +4,13 @@ const X = 137.021284 - 136.853421 // 藤が丘-高畑間の距離
 const scaleFactor = 1000/X // 幅1000pxを基準にレイアウトを最適化する。その後、デバイスの幅にあわせてCSSのtransform: scale()で拡大縮小させる
 
 class Station {
-    constructor (name, longitude, latitude) {
+    constructor (name, latitude, longitude) {
         this.name = name
         // 経度と緯度を、各駅を地図上で区別しやすい位置にプロットできるように
         // 上小田井の緯度(35.223557)を0, 高畑の経度(136.853421)を0とする相対値に変換する
         // 適度な縮尺になるようにscaleFactor倍する
-        this.y = Math.round((35.223557 - longitude) * scaleFactor)
-        this.x = Math.round((latitude - 136.853421) * scaleFactor)
+        this.y = Math.round((35.223557 - latitude) * scaleFactor)
+        this.x = Math.round((longitude - 136.853421) * scaleFactor)
 
         // 地図上の同名のid属性値をもつli要素のスタイルに位置を設定する
         const li = document.getElementById(this.name)
