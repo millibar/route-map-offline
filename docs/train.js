@@ -316,6 +316,7 @@ const restart = () => {
 
     closeTimeTable ()
     removeElements (routemap, 'train')
+    removeLocationMarker ()
 
     for (let i = 0, len = trains_all.length; i < len; i++) {
         pauseTrains(trains_all[i])
