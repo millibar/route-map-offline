@@ -12,18 +12,12 @@ class Train {
         this.ul = document.getElementById('routemap')
         this.li = null
         this.rosen = rosen
-        this.createdTime = toSecFromNow () // インスタンスが生成した時刻
 
     }
 
     start () {
 
-        let t = toSecFromNow()
-        
-        if (t < this.createdTime) {
-            this.position = 0
-            this.createdTime = t
-        }
+        this.position = 0
         
         this.li = document.createElement('li')
         this.li.classList.add('train', 'hidden', this.rosen)
