@@ -469,3 +469,14 @@ const handlePositionError = (err) => {
         body.removeChild(p)
      }, 3000)
 }
+
+/**
+ * 対象の要素にclickedクラスを追加して、1.5s後にはずす
+ * @param {HTMLelement} element 
+ */
+const activateFor1500ms = (element) => {
+    element.classList.add('clicked')
+    setTimeout( () => {
+        element.classList.remove('clicked')
+    }, 1500)
+}

@@ -170,10 +170,9 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
 
 #reload img {
     width: 100%;
-
 }
 
-#reload.rotate {
+#reload.clicked {
     transform: rotate(360deg);
     transition: 0.7s;
     opacity: 1;
@@ -194,6 +193,10 @@ top, left, right, bottomの値もスケーリングされるので位置の調�
 
 #locator:hover {
     opacity: 1;
+}
+
+.clicked {
+    opacity: 1!important;
 }
 
 .fade-out {

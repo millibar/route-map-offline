@@ -12,12 +12,19 @@ class Train {
         this.ul = document.getElementById('routemap')
         this.li = null
         this.rosen = rosen
+        this.createdTime = toSecFromNow () // インスタンスが生成した時刻
 
     }
 
     start () {
-        // 地図上に電車を追加する
-        this.position = 0
+
+        let t = toSecFromNow()
+        
+        if (t < this.createdTime) {
+            this.position = 0
+            this.createdTime = t
+        }
+        
         this.li = document.createElement('li')
         this.li.classList.add('train', 'hidden', this.rosen)
         this.ul.appendChild(this.li)
@@ -137,7 +144,9 @@ class Train {
 
     // 電車を削除する
     remove () {
-        this.ul.removeChild(this.li)
+        if (this.li) {
+            this.ul.removeChild(this.li)
+        }
         window.cancelAnimationFrame(this.reqId)
     }
 }
@@ -163,17 +172,15 @@ handler.addUI(UIreloadBtn)
 handler.addUI(UIlocatorBtn)
 
 daySwitch.addEventListener('click', () => {
-    daySwitch.style.opacity = 1;
-    setTimeout(function (){
-        daySwitch.style.opacity = 0.7;
-    }, 3000)
+    activateFor1500ms (daySwitch)
 }, false)
 
 reloadBtn.addEventListener('click', () => {
-    reloadBtn.classList.add('rotate')
-    setTimeout(function (){
-        reloadBtn.classList.remove('rotate')
-    }, 1000)
+    activateFor1500ms (reloadBtn)
+}, false)
+
+locatorBtn.addEventListener('click', () => {
+    activateFor1500ms (locatorBtn)
 }, false)
 
 
@@ -352,8 +359,9 @@ const geoOptions = {
 locatorBtn.addEventListener('click', () => {
     removeElementsByClassName ('location-marker')
     navigator.geolocation.getCurrentPosition(createLocationMarker, handlePositionError, geoOptions);
-
 }, false)
+
+
 
 
 
