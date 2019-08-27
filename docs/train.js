@@ -56,7 +56,7 @@ class Train {
             return
         }
 
-        const lagTime_s = 20 // 時刻表の時刻よりだいたい20秒くらい遅れてに駅に着く
+        const lagTime_s = 10 // 時刻表の時刻よりだいたい10秒くらい遅れてに駅に着く
 
         let t = toSecFromNow() - lagTime_s
 
@@ -68,21 +68,22 @@ class Train {
         let nextSta = next.sta
         let nextTime_s = toSecFromTimeStr(next.time)
 
-        // 駅間が2分未満（＝1分）のときは、駅間が1分半になるように到着時刻を30秒延ばす。
-        if (nextTime_s - prevTime_s < 120) {
-            nextTime_s += 30
+        // 駅間が1分以下のときは、到着時刻を15秒延ばす。
+        const addTime_s = 15
+
+        if (nextTime_s - prevTime_s <= 60) {
+            nextTime_s += addTime_s
         }
 
         if (this.position - 1 > 0) {
             let prePrevTime_s = toSecFromTimeStr(this.route[this.position - 1].time)
-            if (prevTime_s - prePrevTime_s < 120) {
-                prevTime_s += 30
+            if (prevTime_s - prePrevTime_s <= 60) {
+                prevTime_s += addTime_s
             }
         }
 
 
         if (t < prevTime_s) {
-            
             console.log('発車前')
             let sleepTime_s = prevTime_s - t
             
@@ -90,7 +91,6 @@ class Train {
 
             if (sleepTime_s < 300) {
                 setTimeout(this.update.bind(this), sleepTime_s * 1000)
-
             } else {
                 this.remove()
             }
