@@ -56,16 +56,16 @@ class Train {
             return
         }
 
-        const lagTime_s = 10 // 時刻表の時刻よりだいたい10秒くらい遅れてに駅に着く
+        const lagTime_s = 5 // 時刻表の時刻より5秒くらい遅れてに駅に着く
 
-        let t = toSecFromNow() - lagTime_s
+        const t = toSecFromNow() - lagTime_s
 
-        let prev = this.route[this.position]
-        let prevSta = prev.sta
+        const prev = this.route[this.position]
+        const prevSta = prev.sta
         let prevTime_s = toSecFromTimeStr(prev.time)
 
-        let next = this.route[this.position + 1]
-        let nextSta = next.sta
+        const next = this.route[this.position + 1]
+        const nextSta = next.sta
         let nextTime_s = toSecFromTimeStr(next.time)
 
         // 駅間が1分以下のときは、到着時刻を15秒延ばす。
@@ -76,7 +76,7 @@ class Train {
         }
 
         if (this.position - 1 > 0) {
-            let prePrevTime_s = toSecFromTimeStr(this.route[this.position - 1].time)
+            const prePrevTime_s = toSecFromTimeStr(this.route[this.position - 1].time)
             if (prevTime_s - prePrevTime_s <= 60) {
                 prevTime_s += addTime_s
             }
@@ -85,7 +85,7 @@ class Train {
 
         if (t < prevTime_s) {
             console.log('発車前')
-            let sleepTime_s = prevTime_s - t
+            const sleepTime_s = prevTime_s - t
             
             window.cancelAnimationFrame(this.reqId)
 
@@ -100,11 +100,11 @@ class Train {
 
         const waitTime_s = 20 // 停車時間
         
-        let dX = nextSta.getX() - prevSta.getX()
-        let dY = nextSta.getY() - prevSta.getY()
-        let dT = nextTime_s - (prevTime_s + waitTime_s)
-        let Vx = dX/dT
-        let Vy = dY/dT
+        const dX = nextSta.getX() - prevSta.getX()
+        const dY = nextSta.getY() - prevSta.getY()
+        const dT = nextTime_s - (prevTime_s + waitTime_s)
+        const Vx = dX/dT
+        const Vy = dY/dT
 
         this.angle = getRotateAngle(dX, dY)
 
@@ -115,7 +115,7 @@ class Train {
             this.go()
 
         } else if (prevTime_s + waitTime_s <= t && t < nextTime_s) {
-            let elapsed_s = t - (prevTime_s + waitTime_s)
+            const elapsed_s = t - (prevTime_s + waitTime_s)
             this.x = prevSta.getX() + Math.round(Vx * elapsed_s)
             this.y = prevSta.getY() + Math.round(Vy * elapsed_s)
             this.li.classList.remove('wait')

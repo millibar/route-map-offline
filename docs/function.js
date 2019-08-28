@@ -376,7 +376,7 @@ const createTimeTable = (array) => {
 
     const dl = document.createElement('dl')
     
-    let t1 = toSecFromNow()
+    const t1 = toSecFromNow()
 
     let count = 0
    
@@ -386,18 +386,18 @@ const createTimeTable = (array) => {
             break
         }
 
-        const lagTime_s = 20
+        const lagTime_s = 5
 
-        let timeStr = array[i].time
-        let t2= toSecFromTimeStr(timeStr) - lagTime_s
+        const timeStr = array[i].time
+        const t2= toSecFromTimeStr(timeStr) - lagTime_s
 
         if (t1 - t2 > 60) { // 過ぎた駅は表示しない
             continue
         }
 
-        let stationName = array[i].sta.name
-        let dt = document.createElement('dt')
-        let dd = document.createElement('dd')
+        const stationName = array[i].sta.name
+        const dt = document.createElement('dt')
+        const dd = document.createElement('dd')
         dt.textContent = timeStr
         dd.textContent = stationName
         dl.appendChild(dt)
@@ -426,21 +426,43 @@ const closeTimeTable = () => {
 }
 
 /**
+ * 引数で与えたメッセージを内容とするp要素をbody要素に追加する。3秒後にp要素を取り除く。
+ * @param {string} msg 
+ */
+const createMessage = (msg) => {
+    const p = document.createElement('p')
+    p.textContent = msg
+    p.classList.add('msg')
+
+    const body = document.getElementsByTagName('body')[0]
+    body.appendChild(p)
+    
+    setTimeout(() => { 
+        body.removeChild(p)
+     }, 3000)
+}
+
+/**
  * 位置情報を受け取り、地図上にマーカーを表示する
  * @param {Position} position 
  */
 const createLocationMarker = (position) => {
     const crd = position.coords
 
-    let latitude = crd.latitude
-    let longitude = crd.longitude
+    const latitude = crd.latitude
+    const longitude = crd.longitude
 
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
 
-    let y = Math.round((35.223557 - latitude) * scaleFactor) // scaleFactorはstation.jsで定義されたグローバル変数
-    let x = Math.round((longitude - 136.853421) * scaleFactor)
+    const y = Math.round((35.223557 - latitude) * scaleFactor) // scaleFactorはstation.jsで定義されたグローバル変数
+    const x = Math.round((longitude - 136.853421) * scaleFactor)
+
+    if (x < -50 || 1050 < x || y < -50 || 827 < y) {
+        createMessage ('路線図の範囲外です')
+        return
+    }
 
     const ul = document.getElementById('routemap')
     const li = document.createElement('li')
@@ -458,16 +480,7 @@ const createLocationMarker = (position) => {
 const handlePositionError = (err) => {
     console.warn(`ERROR(${err.code}): ${err.message}`);
     const msg = '位置情報を取得できませんでした'
-    const p = document.createElement('p')
-    p.textContent = msg
-    p.classList.add('msg')
-
-    const body = document.getElementsByTagName('body')[0]
-    body.appendChild(p)
-    
-    setTimeout(() => { 
-        body.removeChild(p)
-     }, 3000)
+    createMessage (msg)
 }
 
 /**
