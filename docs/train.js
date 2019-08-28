@@ -138,7 +138,7 @@ class Train {
 
     // 電車を削除する
     remove () {
-        if (this.li) {
+        if (this.ul && this.li) {
             this.ul.removeChild(this.li)
         }
         window.cancelAnimationFrame(this.reqId)
