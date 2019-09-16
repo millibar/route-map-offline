@@ -281,26 +281,74 @@ const test_isAscending = () => {
 //test_isAscending()
 
 /**
+ * Dateオブジェクトを与えると、その日が祝日か否かを返す
+ * @param {Date} date Dateオブジェクト
+ * @return {boolean} 祝日ならtrue
+ */
+const isHoliday = (date) => {
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+
+    const month0 = ('0' + month).slice(-2)
+    const day0 = ('0' + day).slice(-2)
+
+    const dateNumber = Number(`${year}${month0}${day0}`)
+
+    return holidays.some(value => value == dateNumber)
+}
+
+const test_isHoliday = () => {
+    const dates = [new Date(2019, 8, 16), new Date(2019, 8, 17), new Date(2020, 0, 1)]
+    const expecteds = [true, false, true]
+
+    for (let i = 0, len = dates.length; i < len; i++) {
+        let date = dates[i]
+        let actual = isHoliday(date)
+        let expected = expecteds[i]
+        console.assert(actual === expected,
+            `isHoliday(${date}) => ${actual}, expected: ${expected}`)
+    }
+}
+test_isHoliday()
+
+/**
  * 今日の曜日を文字列で返す
+ * 今日が祝日　　　　→　休日
+ * 今日が日曜、土曜　→　休日
+ * 今日が金曜　　　　→　金曜
+ * 明日が祝日　　　　→　金曜
+ * 明日が日曜、土曜　→　金曜
+ * 上記以外　　　　　→　平日
  * @return {string} 平,金,休のいずれかの文字
  */
 const getDayOfWeekStr = () => {
     const today = new Date()
-    let hour = today.getHours()
-    let dayOfWeek = today.getDay()
-    // 0:00～5:00までは今日とする。月曜0:10は日曜24:10とみなし、日曜と判定する
+    const hour = today.getHours()
+
+    // 0:00～5:00までは今日とする。たとえば月曜0:10は日曜24:10とみなす
     if (hour < 5) {
-        dayOfWeek -= 1
+        today.setDate(today.getDate() -1)
     }
 
-    if (dayOfWeek < 0) {
-        dayOfWeek +=6
+    if (isHoliday(today) || today.getDay() == 0 || today.getDay() == 6) {
+        return '休'
     }
 
-    let dayOfWeekStr = ['休','平','平','平','平','金','休']
+    if (today.getDay() == 5) {
+        return '金'
+    }
 
-    return dayOfWeekStr[dayOfWeek]
+    today.setDate(today.getDate() + 1) // この行以降todayは翌日を表す
+    const tomorrow = today
+    if (isHoliday(tomorrow) || tomorrow.getDay() == 0 || tomorrow.getDay() == 6) {
+        return '金'
+    }
+
+    return '平'
 }
+console.log(`曜日：${getDayOfWeekStr()}`)
+
 
 /**
  * 現在の曜日に応じて、曜日のラジオボタンの選択状態を変える

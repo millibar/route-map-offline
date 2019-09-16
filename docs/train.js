@@ -60,28 +60,19 @@ class Train {
 
         const t = toSecFromNow() - lagTime_s
 
-        const prev = this.route[this.position]
-        const prevSta = prev.sta
-        let prevTime_s = toSecFromTimeStr(prev.time)
-
         const next = this.route[this.position + 1]
         const nextSta = next.sta
         let nextTime_s = toSecFromTimeStr(next.time)
 
-        // 駅間が1分以下のときは、到着時刻を15秒延ばす。
-        const addTime_s = 15
-
-        if (nextTime_s - prevTime_s <= 60) {
-            nextTime_s += addTime_s
+        if (nextTime_s + 60 < t) { // 無駄な処理をしないように、すぐに次のインデックスへ進む
+            this.position += 1
+            this.update()
+            return
         }
 
-        if (this.position - 1 > 0) {
-            const prePrevTime_s = toSecFromTimeStr(this.route[this.position - 1].time)
-            if (prevTime_s - prePrevTime_s <= 60) {
-                prevTime_s += addTime_s
-            }
-        }
-
+        const prev = this.route[this.position]
+        const prevSta = prev.sta
+        let prevTime_s = toSecFromTimeStr(prev.time)
 
         if (t < prevTime_s) {
             console.log('発車前')
@@ -96,6 +87,20 @@ class Train {
             }
             
             return
+        }
+
+        // 駅間が1分以下のときは、到着時刻を15秒延ばす。
+        const addTime_s = 15
+
+        if (nextTime_s - prevTime_s <= 60) {
+            nextTime_s += addTime_s
+        }
+
+        if (this.position - 1 > 0) {
+            const prePrevTime_s = toSecFromTimeStr(this.route[this.position - 1].time)
+            if (prevTime_s - prePrevTime_s <= 60) {
+                prevTime_s += addTime_s
+            }
         }
 
         const waitTime_s = 20 // 停車時間
@@ -192,10 +197,10 @@ const 運行表_桜通線_休_昇 = makeTrainTimeTable (transpose(桜通線_休_
 const 運行表_桜通線_平_降 = makeTrainTimeTable (transpose(桜通線_平_降), 桜通線.reverse())
 const 運行表_桜通線_休_降 = makeTrainTimeTable (transpose(桜通線_休_降), 桜通線) // リバースされている
 
-const 運行表_名城線_平_左 = makeTrainTimeTable (transpose(名城線_平_左), 名城線_左)
-const 運行表_名城線_休_左 = makeTrainTimeTable (transpose(名城線_休_左), 名城線_左)
-const 運行表_名城線_平_右 = makeTrainTimeTable (transpose(名城線_平_右), 名城線_右)
-const 運行表_名城線_休_右 = makeTrainTimeTable (transpose(名城線_休_右), 名城線_右)
+const 運行表_名城線_平_左 = makeTrainTimeTable (transpose(名城線_平_左), 駅順_名城線_平_左)
+const 運行表_名城線_休_左 = makeTrainTimeTable (transpose(名城線_休_左), 駅順_名城線_休_左)
+const 運行表_名城線_平_右 = makeTrainTimeTable (transpose(名城線_平_右), 駅順_名城線_平_右)
+const 運行表_名城線_休_右 = makeTrainTimeTable (transpose(名城線_休_右), 駅順_名城線_休_右)
 
 const 運行表_名港線_平_昇 = makeTrainTimeTable (transpose(名港線_平_昇), 名港線_昇)
 const 運行表_名港線_休_昇 = makeTrainTimeTable (transpose(名港線_休_昇), 名港線_昇)
@@ -400,4 +405,5 @@ for (let key in testCases) {
     console.assert(isAscending(testCases[key]), `行：${key}`)
     console.assert(isAscending(transpose(testCases[key])), `列：${key}`)
 }
+
 */
