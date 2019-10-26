@@ -11,6 +11,14 @@ html, body {
 
 body {
     background: #efefef;
+    color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #000;
+        color: #fff;
+    }
 }
 
 * {

@@ -362,6 +362,12 @@ locatorBtn.addEventListener('click', () => {
 
 
 
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        restart()
+    }
+}, false)
+
 
 
 
